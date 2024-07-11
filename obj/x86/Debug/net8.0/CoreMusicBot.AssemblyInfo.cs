@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CoreMusicBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+673083c7e6dbffee97a9bf34b9baf5477bdd2be5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07ded6a7a4610d2cc51f3ad3aab7b5af0058e875")]
 [assembly: System.Reflection.AssemblyProductAttribute("CoreMusicBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CoreMusicBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

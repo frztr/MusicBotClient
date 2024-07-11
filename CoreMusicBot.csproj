@@ -17,10 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreMusicBotLibrary\CoreMusicBotLibrary.csproj" />
+    <Reference Include="CoreMusicBotLibrary">
+      <HintPath>CoreMusicBotLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CoreMusicBotLibrary.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

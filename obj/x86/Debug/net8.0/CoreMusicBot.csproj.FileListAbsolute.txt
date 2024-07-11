@@ -1,4 +1,3 @@
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\ffmpeg.exe
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\libsodium.dll
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\opus.dll
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\sounds\ban.m4a
@@ -36,7 +35,6 @@ C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\Syste
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\System.Reactive.dll
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\Websocket.Client.dll
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\CoreMusicBotLibrary.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\x86\Debug\net8.0\CoreMusicBotLibrary.pdb
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.csproj.AssemblyReference.cache
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.AssemblyInfoInputs.cache
@@ -48,3 +46,4 @@ C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\refin
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.pdb
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.genruntimeconfig.cache
 C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\ref\CoreMusicBot.dll
+C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\x86\Debug\net8.0\CoreMusicBot.sourcelink.json
