@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Audio;
 using Discord.Net;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using MusicBotClient.CoordinationService;
 using MusicBotClient.MusicService;
@@ -34,21 +35,38 @@ namespace MusicBotClient.AudioVoiceChannel
         {
             this.id = id;
             this.channel = channel;
+
             this.logService = Program.getProvider().GetService<ILogService>();
             this.coordinationService = Program.getProvider().GetService<ICoordinationService>();
             try
             {
-                this.client = channel.ConnectAsync().GetAwaiter().GetResult();
-                this.outStream = client.CreatePCMStream(AudioApplication.Mixed);
                 this.MixerStream = new MemoryStream();
-
-                Task.Run(() => Loop());
+                //this.client = channel.ConnectAsync().GetAwaiter().GetResult();                
+                Run();
+                //Task.Run(async () =>
+                //{
+                //    while (true)
+                //    {
+                //        await Task.Delay(20000);
+                //        await channel.DisconnectAsync();
+                //        logService.Log(LogCategories.LOG_DATA, module, "AUDIO DISCONNECT");
+                //    }
+                //});
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
+                logService.Log(LogCategories.LOG_DATA, module, "AudioVoiceChannel()");
                 logService.Log(LogCategories.LOG_ERR, module, exception: ex);
             }
         }
+
+        private async Task Run()
+        {
+            this.client = await channel.ConnectAsync();
+            this.outStream = this.client.CreatePCMStream(AudioApplication.Mixed);
+            Task.Run(() => Loop());
+        }
+
         bool _isplaying = false;
         bool IsPlaying
         {
@@ -70,6 +88,8 @@ namespace MusicBotClient.AudioVoiceChannel
 
         private async Task Loop()
         {
+            logService.Log(LogCategories.LOG_DATA, module, $"Loop for audioclient {id} started");
+
             while (true)
             {
                 if (streamReducers.Count > 0)
@@ -81,23 +101,6 @@ namespace MusicBotClient.AudioVoiceChannel
                             var reducer = streamReducers[i];
                             try
                             {
-
-                                //if (!reducer.IsRunning) 
-                                //{ 
-                                //    if (reducer.GetType() == typeof(MusicStreamReducer))
-                                //    {
-                                //        Stop();
-                                //    }
-                                //    else
-                                //    {
-                                //        streamReducers.Remove(reducer);
-                                //        await reducer.Destroy();
-                                //        logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                                //    }
-                                //    i--;
-                                //    continue;
-                                //}
-                                //logService.Log(LogCategories.LOG_DATA, module, $"Loop reducers count:{streamReducers.Count}");
                                 if (reducer != null)
                                 {
                                     await reducer.Execute(MixerStream);
@@ -133,23 +136,36 @@ namespace MusicBotClient.AudioVoiceChannel
                         {
                             await MixerStream.CopyToAsync(outStream);
                         }
+                        catch (TaskCanceledException ex)
+                        {                      
+                            logService.Log(LogCategories.LOG_DATA, module, "TaskCanceledException");
+                            await Task.Delay(300);
+                            await Run();
+                            return;
+                        }
                         catch (OperationCanceledException ex)
                         {
                             logService.Log(LogCategories.LOG_DATA, module, "OPERATIONCANCELEDEXCEPTION");
                             logService.Log(LogCategories.LOG_DATA, module, $"AudioClient connection: {client.ConnectionState}");
                             logService.Log(LogCategories.LOG_ERR, module, exception: ex);
                             logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            //TEST RECREATE STREAM ON OPERATIONCANCELED EXCEPTION
-                            client = await channel.ConnectAsync();
-                            logService.Log(LogCategories.LOG_DATA, module, $"AudioClient reconnect result: {client.ConnectionState}");
-                            outStream = client.CreatePCMStream(AudioApplication.Mixed);
-                            logService.Log(LogCategories.LOG_DATA, module, $"Pcm recreation: {outStream}");
+                            await Task.Delay(300);
+                            await Run();
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                            await Task.Delay(300);
+                            await Run();
+                            return;
                         }
                         MixerStream.SetLength(0);
                     }
 
                 }
             }
+
         }
 
         public ulong getId()
@@ -165,9 +181,10 @@ namespace MusicBotClient.AudioVoiceChannel
         public void Stop()
         {
             logService.Log(LogCategories.LOG_DATA, module, $"Stopping audio in {id}");
-            IsPlaying = false;
+            //Removed for dont duplicate sending to server.
+            //IsPlaying = false;
 
-            for (int i = 0; i < streamReducers.Count; i++) 
+            for (int i = 0; i < streamReducers.Count; i++)
             {
                 var x = streamReducers[i];
                 logService.Log(LogCategories.LOG_DATA, module, $"{x.ToString()}");
@@ -177,7 +194,7 @@ namespace MusicBotClient.AudioVoiceChannel
                     //streamReducers.Remove(x);
                     reducer.Destroy();
                 }
-            }      
+            }
 
             logService.Log(LogCategories.LOG_DATA, module, $"Audio Stopped in {id}");
         }
@@ -192,7 +209,7 @@ namespace MusicBotClient.AudioVoiceChannel
             streamReducers.Add(reducer);
         }
 
-        public void reducerOnEnd(AbsStreamReducer reducer) 
+        public void reducerOnEnd(AbsStreamReducer reducer)
         {
             streamReducers.Remove(reducer);
             logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");

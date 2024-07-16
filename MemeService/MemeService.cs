@@ -47,8 +47,8 @@ namespace MusicBotClient.MemeService
                 Process p;
                 ProcessStartInfo ffmpeg = new ProcessStartInfo
                 {
-                    FileName = "ffmpeg.exe",
-                    Arguments = $" -hide_banner -loglevel error -i \"{path}\" -f s16le -ar 48000 pipe:1",
+                    FileName = "ffmpeg",
+                    Arguments = $"-hide_banner -loglevel error -i \"{path}\" -f s16le -ar 48000 pipe:1",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 };

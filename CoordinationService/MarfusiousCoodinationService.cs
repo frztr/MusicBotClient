@@ -13,7 +13,7 @@ namespace MusicBotClient.CoordinationService
 {
     class MarfusiousCoodinationService : ICoordinationService
     {
-        WebsocketClient client = new WebsocketClient(new Uri("ws://26.238.79.37:80"));
+        WebsocketClient client = new WebsocketClient(new Uri("ws://192.168.137.1:80"));
         ILogService logService;
         IMusicService musicService;
         const string module = "CoordinationService";

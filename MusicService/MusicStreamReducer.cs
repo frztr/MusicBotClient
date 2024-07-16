@@ -16,8 +16,8 @@ namespace MusicBotClient.MusicService
     {
         private ILogService logService;
         private string path;
-        private string module = "MusicService";
-        private const int ARRAY_SIZE = 3840;
+        private string module = "MusicStreamReducer";
+        private const int ARRAY_SIZE = 960;
         public Process usedProcess { get; protected set; }
         private IIOService iOService;
         private ulong bytecount = 0;
@@ -74,18 +74,33 @@ namespace MusicBotClient.MusicService
 
         private Process CreateYoutubeStream(string url)
         {
-            double ticks = (Convert.ToDouble(bytecount) / (50 * ARRAY_SIZE)) * 10000000;
+            double ticks = (Convert.ToDouble(bytecount) / (200 * ARRAY_SIZE)) * 10000000;
             DateTime pos = new DateTime(Convert.ToInt64(ticks));
             try
             {
-                ProcessStartInfo ffmpeg = new ProcessStartInfo
+                ProcessStartInfo ffmpeg = new ProcessStartInfo();
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                 {
-                    FileName = "cmd.exe",
-                    Arguments = $"/K yt-dlp.exe -q -f bestaudio/best \"{url}\" -o - | ffmpeg.exe -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                };
+                    ffmpeg = new ProcessStartInfo
+                    {
+                        FileName = "cmd.exe",
+                        Arguments = $"/K yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+                }
+                else 
+                {
+                    ffmpeg = new ProcessStartInfo
+                    {
+                        FileName = "/bin/bash",
+                        Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+                }
                 logService.Log(LogCategories.LOG_DATA, module, "Loading Track");
                 Process p = Process.Start(ffmpeg);
                 p.EnableRaisingEvents = true;
@@ -107,7 +122,9 @@ namespace MusicBotClient.MusicService
 
             if (e.Data != null)
             {
-                if (e.Data.Contains("10054") || e.Data.Contains("403"))
+                if (e.Data.Contains("10054") ||
+                    e.Data.Contains("403") ||
+                    e.Data.Contains("Got error: The read operation timed out. Giving up after 10 retries"))
                 {
                     logService.Log(LogCategories.LOG_DATA, module, $"Continue on bytes: {bytecount}");
                     Continue();
@@ -117,8 +134,16 @@ namespace MusicBotClient.MusicService
 
         private void P_Exited(object sender, EventArgs e)
         {
-            logService.Log(LogCategories.LOG_DATA, module, $"Exited process. {usedProcess.ExitCode}");
-            OnEnd(this);
+            try
+            {
+                usedProcess.WaitForExit();
+                logService.Log(LogCategories.LOG_DATA, module, $"Exited process. {usedProcess.ExitCode}");
+                OnEnd(this);
+            }
+            catch (Exception ex)
+            {
+                logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+            }
             //IsRunning = false;
         }
 

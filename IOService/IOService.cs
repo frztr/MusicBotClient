@@ -37,7 +37,7 @@ namespace MusicBotClient.IOService
                         if (!proc.HasExited)
                         {
                             logService.Log(LogCategories.LOG_DATA, module, $"Kill Process:{proc.ProcessName} ({proc.Id})");
-                            proc.Kill();
+                            proc.Kill(true);
                             proc.WaitForExit();
                             proc.Close();
                         }

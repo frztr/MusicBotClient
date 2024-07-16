@@ -23,7 +23,7 @@ namespace MusicBotClient.MusicService
 {
     class MusicService : IMusicService
     {
-        DiscordSocketClient client;
+        DiscordShardedClient client;
         AbsAudioChannelFactory audioChannelFactory;
         ILogService logService;
         IIOService IOService;
@@ -33,7 +33,7 @@ namespace MusicBotClient.MusicService
         public MusicService()
         {
             IServiceProvider provider = Program.getProvider();
-            client = provider.GetService<DiscordSocketClient>();
+            client = provider.GetService<DiscordShardedClient>();
             audioChannelFactory = provider.GetService<AbsAudioChannelFactory>();
             logService = provider.GetService<ILogService>();
             IOService = provider.GetService<IIOService>();
@@ -81,16 +81,6 @@ namespace MusicBotClient.MusicService
                 }
             }
             vchannel.addStreamReducer(new MusicStreamReducer(path));
-            //var reducers = vchannel.getStreamReducers();
-            //var streamreducer = new MusicStreamReducer(path);
-            //reducers.Add(streamreducer);
-
-            //REMOVE THAT
-            //reducers.Add(new MusicStreamReducer("https://www.youtube.com/watch?v=u7Wk2VzdLcA"));
-            //REMOVE THAT
-
-            //var strR = new MusicStreamReducer(path);
-            //reducers.Add(strR);
         }
 
         public async Task Stop(ulong voicechannel)

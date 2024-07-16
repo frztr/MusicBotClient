@@ -25,7 +25,7 @@ namespace MusicBotClient
 
         private static async Task RunAsync()
         {
-            var discordclient = new DiscordSocketClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent });
+            var discordclient = new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent });
             provider = new ServiceCollection()
                 .AddSingleton<ILogService>(new LogService("MusicBotClient"))
                 .AddSingleton<ICoordinationService, MarfusiousCoodinationService>()
@@ -38,10 +38,11 @@ namespace MusicBotClient
             provider.GetService<ICoordinationService>();
 
 
-            var client = provider.GetService<DiscordSocketClient>();
+            var client = provider.GetService<DiscordShardedClient>();
 
             client.Log += Client_Log;
-            client.Disconnected += Client_Disconnected;
+            client.ShardDisconnected += Client_ShardDisconnected;
+            //client.Disconnected += Client_Disconnected;
 
             await client.LoginAsync(TokenType.Bot, "ODEyMzE3NjA0MjY1MDY2NTE3.Grbw9X.-AVeOgLvzZZ4MXUAfz20wHtU72su1Z7V9g8l1Y");
             await client.StartAsync();
@@ -49,25 +50,21 @@ namespace MusicBotClient
             Console.Read();
         }
 
-        private static async Task Client_Disconnected(Exception arg)
+        private async static Task Client_ShardDisconnected(Exception arg1, DiscordSocketClient arg2)
         {
-            provider.GetService<ILogService>().Log(LogCategories.LOG_DATA, "Discord", "Client Disconnected");
-            provider.GetService<ILogService>().Log(LogCategories.LOG_ERR, "Discord", exception: arg);
+            provider.GetService<ILogService>().Log(LogCategories.LOG_DATA, "DiscordShardedClient", "Client Disconnected");
+            provider.GetService<ILogService>().Log(LogCategories.LOG_ERR, "DiscordShardedClient", exception: arg1);
         }
 
-        //private static void P_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        //private static async Task Client_Disconnected(Exception arg)
         //{
-        //    Console.WriteLine($"Data:" + e.Data);
-        //}
-
-        //private static void P_Exited(object sender, EventArgs e)
-        //{
-        //    Console.WriteLine($"Exit code:{((Process)sender).ExitCode}");
-        //}
-
-        //private static void P_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        //{
-        //    Console.WriteLine($"Err:"+ e.Data);
+        //    provider.GetService<ILogService>().Log(LogCategories.LOG_DATA, "DiscordSocketClient", "Client Disconnected");
+        //    provider.GetService<ILogService>().Log(LogCategories.LOG_ERR, "DiscordSocketClient", exception: arg);
+        //    //added for exception fix
+        //    //if (arg.GetType() == typeof(WebSocketException)) 
+        //    //{
+        //    //    await provider.GetService<DiscordSocketClient>().StartAsync();
+        //    //}
         //}
 
         private static async Task Client_Log(LogMessage arg)
@@ -79,13 +76,13 @@ namespace MusicBotClient
             else
             {
                 provider.GetService<ILogService>().Log(LogCategories.LOG_ERR, "Discord", exception: arg.Exception);
-                if (arg.Exception.GetType() == typeof(WebSocketException))
-                {
-                    var socketclient = provider.GetService<DiscordSocketClient>();
-                    //FIXING
-                    provider.GetService<ILogService>().Log(LogCategories.LOG_DATA, "Discord", "Starting new client connection...");
-                    await socketclient.StartAsync();
-                }
+                //if (arg.Exception.GetType() == typeof(WebSocketException))
+                //{
+                //    var socketclient = provider.GetService<DiscordSocketClient>();
+                //    //FIXING
+                //    provider.GetService<ILogService>().Log(LogCategories.LOG_DATA, "Discord", "Starting new client connection...");
+                //    await socketclient.StartAsync();
+                //}
             }
         }
 
