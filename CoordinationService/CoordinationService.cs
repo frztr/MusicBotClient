@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using MusicBotLibrary.LogService;
 using MusicBotClient.MusicService;
+using CoreMusicBot;
 
 namespace MusicBotClient.CoordinationService
 {
@@ -21,7 +22,7 @@ namespace MusicBotClient.CoordinationService
 
         public CoordinationService()
         {
-            logService = Program.getProvider().GetService<ILogService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
             RunAsync();
         }
 
@@ -78,7 +79,7 @@ namespace MusicBotClient.CoordinationService
         {
             logService.Log(LogCategories.LOG_DATA, module, $"message received: {message}");
             dynamic json = JsonConvert.DeserializeObject<dynamic>(message);
-            var musicservice = Program.getProvider().GetService<IMusicService>();
+            var musicservice = ApplicationContext.ServiceProvider.GetService<IMusicService>();
             var voicechannelid = Convert.ToUInt64(json.voicechannelid.ToString());
             switch (json.operation.ToString())
             {

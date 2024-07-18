@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreMusicBot;
 
 namespace MusicBotClient.MusicService
 {
@@ -22,8 +23,8 @@ namespace MusicBotClient.MusicService
 
         public MemeStreamReducer(Stream usedProcess)
         {
-            logService = Program.getProvider().GetService<ILogService>();
-            memeService = Program.getProvider().GetService<IMemeService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
+            memeService = ApplicationContext.ServiceProvider.GetService<IMemeService>();
             logService.Log(LogCategories.LOG_DATA, module, $"Stream position: {usedProcess.Position}");
             usedProcess.Position = 0;
             this.usedProcess = usedProcess;
@@ -34,7 +35,7 @@ namespace MusicBotClient.MusicService
         {
             return await Task.Run(() =>
             {
-                var memeService = Program.getProvider().GetService<IMemeService>();
+                var memeService = ApplicationContext.ServiceProvider.GetService<IMemeService>();
                 var usedProcess = new MemoryStream();
                 byte[] buffer = memeService.getSound(name);
                 usedProcess.Write(buffer, 0, buffer.Length);

@@ -8,6 +8,7 @@ using Websocket.Client;
 using Microsoft.Extensions.DependencyInjection;
 using MusicBotLibrary.LogService;
 using MusicBotClient.MusicService;
+using CoreMusicBot;
 
 namespace MusicBotClient.CoordinationService
 {
@@ -20,8 +21,8 @@ namespace MusicBotClient.CoordinationService
 
         public MarfusiousCoodinationService() 
         {
-            logService = Program.getProvider().GetService<ILogService>();
-            musicService = Program.getProvider().GetService<IMusicService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
+            musicService = ApplicationContext.ServiceProvider.GetService<IMusicService>();
             client.ReconnectTimeout = null;
             client.MessageReceived.Subscribe(msg => MessageReceived(msg.Text));
             client.Start();
@@ -74,7 +75,7 @@ namespace MusicBotClient.CoordinationService
                         string response = await musicService.Leave(voiceChannelId);
                         if (response == "disconnected")
                         {
-                            SendAsync(JsonConvert.SerializeObject(new { operation = "clientJoinedChannel", channelid = voiceChannelId, messageid }));
+                            SendAsync(JsonConvert.SerializeObject(new { operation = "clientLeavedChannel", channelid = voiceChannelId, messageid }));
                         }
                     }
                     break;

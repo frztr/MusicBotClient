@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using CoreMusicBot;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using MusicBotClient.IOService;
 using MusicBotLibrary.LogService;
@@ -24,10 +25,10 @@ namespace MusicBotClient.MusicService
 
         public MusicStreamReducer(string path)
         {
-            logService = Program.getProvider().GetService<ILogService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
             this.path = path;
             Continue();
-            this.iOService = Program.getProvider().GetService<IIOService>();
+            this.iOService = ApplicationContext.ServiceProvider.GetService<IIOService>();
         }
 
 

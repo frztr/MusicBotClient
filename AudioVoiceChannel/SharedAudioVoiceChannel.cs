@@ -1,9 +1,10 @@
-﻿using CoreMusicBot;
+﻿using CoreMusicBot.MusicService;
 using Discord;
 using Discord.Audio;
 using Discord.Net;
-using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using MusicBotClient;
+using MusicBotClient.AudioVoiceChannel;
 using MusicBotClient.CoordinationService;
 using MusicBotClient.MusicService;
 using MusicBotLibrary.LogService;
@@ -11,15 +12,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace MusicBotClient.AudioVoiceChannel
+namespace CoreMusicBot.AudioVoiceChannel
 {
-    class AudioVoiceChannel : IAudioVoiceChannel
+    internal class SharedAudioVoiceChannel : IAudioVoiceChannel
     {
         IAudioChannel channel;
         IAudioClient client;
@@ -29,30 +28,20 @@ namespace MusicBotClient.AudioVoiceChannel
         Stream MixerStream;
         List<AbsStreamReducer> streamReducers = new List<AbsStreamReducer>();
         ILogService logService;
-        ICoordinationService coordinationService;
-        const string module = "AudioVoiceChannel";
+        IShardedMusicService musicService;
+        const string module = "SharedAudioVoiceChannel";
 
-        public AudioVoiceChannel(ulong id, IAudioChannel channel)
+        public SharedAudioVoiceChannel(ulong id, IAudioChannel channel)
         {
             this.id = id;
             this.channel = channel;
 
             this.logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
-            this.coordinationService = ApplicationContext.ServiceProvider.GetService<ICoordinationService>();
+            this.musicService = ApplicationContext.ServiceProvider.GetService<IShardedMusicService>();
             try
             {
                 this.MixerStream = new MemoryStream();
-                //this.client = channel.ConnectAsync().GetAwaiter().GetResult();                
                 Run();
-                //Task.Run(async () =>
-                //{
-                //    while (true)
-                //    {
-                //        await Task.Delay(20000);
-                //        await channel.DisconnectAsync();
-                //        logService.Log(LogCategories.LOG_DATA, module, "AUDIO DISCONNECT");
-                //    }
-                //});
             }
             catch (Exception ex)
             {
@@ -80,9 +69,10 @@ namespace MusicBotClient.AudioVoiceChannel
                 _isplaying = value;
                 if (value == false)
                 {
-                    logService.Log(LogCategories.LOG_DATA, module, "Send_async. track_ended");
-                    coordinationService.SendAsync(
-                        JsonConvert.SerializeObject(new { operation = "clientEndedVideo", channelid = id }));
+                    //logService.Log(LogCategories.LOG_DATA, module, "Send_async. track_ended");
+                    //coordinationService.SendAsync(
+                    //    JsonConvert.SerializeObject(new { operation = "clientEndedVideo", channelid = id }));
+                    musicService.Play(id);
                 }
             }
         }
@@ -126,7 +116,6 @@ namespace MusicBotClient.AudioVoiceChannel
                             }
                             catch (Exception ex)
                             {
-                                logService.Log(LogCategories.LOG_DATA, module, "Reducer exception");
                                 logService.Log(LogCategories.LOG_ERR, module, exception: ex);
                                 streamReducers.Remove(reducer);
                                 //await reducer.Destroy();
@@ -139,13 +128,10 @@ namespace MusicBotClient.AudioVoiceChannel
                             await MixerStream.CopyToAsync(outStream);
                         }
                         catch (TaskCanceledException ex)
-                        {                      
+                        {
                             logService.Log(LogCategories.LOG_DATA, module, "TaskCanceledException");
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
+                            await Task.Delay(300);
+                            await Run();
                             return;
                         }
                         catch (OperationCanceledException ex)
@@ -154,22 +140,15 @@ namespace MusicBotClient.AudioVoiceChannel
                             logService.Log(LogCategories.LOG_DATA, module, $"AudioClient connection: {client.ConnectionState}");
                             logService.Log(LogCategories.LOG_ERR, module, exception: ex);
                             logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
+                            await Task.Delay(300);
+                            await Run();
                             return;
                         }
                         catch (Exception ex)
                         {
-                            logService.Log(LogCategories.LOG_DATA, module, "EXCEPTION");
                             logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
+                            await Task.Delay(300);
+                            await Run();
                             return;
                         }
                         MixerStream.SetLength(0);
@@ -193,6 +172,7 @@ namespace MusicBotClient.AudioVoiceChannel
         public void Stop()
         {
             logService.Log(LogCategories.LOG_DATA, module, $"Stopping audio in {id}");
+            //Removed for dont duplicate sending to server.
             //IsPlaying = false;
 
             for (int i = 0; i < streamReducers.Count; i++)
@@ -206,7 +186,7 @@ namespace MusicBotClient.AudioVoiceChannel
                     reducer.Destroy();
                 }
             }
-            logService.Log(LogCategories.LOG_DATA, module, $"Reducers count {streamReducers.Count}");
+
             logService.Log(LogCategories.LOG_DATA, module, $"Audio Stopped in {id}");
         }
 
@@ -223,11 +203,10 @@ namespace MusicBotClient.AudioVoiceChannel
         public void reducerOnEnd(AbsStreamReducer reducer)
         {
             streamReducers.Remove(reducer);
-            logService.Log(LogCategories.LOG_DATA, module, $"Reducer on End. reducers count:{streamReducers.Count}");
+            logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
             if (reducer.GetType() == typeof(MusicStreamReducer))
             {
                 IsPlaying = false;
-                logService.Log(LogCategories.LOG_DATA, module, $"Reducer on End. IsPlaying:{IsPlaying}");
             }
 
         }
@@ -238,31 +217,3 @@ namespace MusicBotClient.AudioVoiceChannel
         }
     }
 }
-//NOTIFY SERVER THAT MUSIC IS OVER
-
-//if (streamReducers.FirstOrDefault(x => x.GetType() == typeof(MusicStreamReducer)) == null)
-//{
-//    logService.Log(LogCategories.LOG_DATA, module, "Send_async. track_ended");
-//    coordinationService.SendAsync(JsonConvert.SerializeObject(new { operation = "clientEndedVideo", channelid = id }));
-//}
-
-//try
-//{
-//    Process p = Process.GetProcessById(((MusicStreamReducer)reducer).usedProcess.Id);
-//}
-//catch (ArgumentException ex)
-//{
-//    logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-
-//    //CONTINUE PLAYING IF IT STOPS
-
-//    //if (((MusicStreamReducer)reducer).IsRunning)
-//    //{
-//    //    ((MusicStreamReducer)reducer).Continue();
-//    //}
-
-//    streamReducers.Remove(reducer);
-//    await reducer.Destroy();
-//    i--;
-//    logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-//}

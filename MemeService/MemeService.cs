@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CoreMusicBot;
+using Microsoft.Extensions.DependencyInjection;
 using MusicBotLibrary.LogService;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace MusicBotClient.MemeService
         public MemeService()
         {
             Sounds = new Dictionary<string, byte[]>();
-            logService = Program.getProvider().GetService<ILogService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
             Task.Run(() => Loading());
         }
 

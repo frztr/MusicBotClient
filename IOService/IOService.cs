@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CoreMusicBot;
+using Microsoft.Extensions.DependencyInjection;
 using MusicBotLibrary.LogService;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace MusicBotClient.IOService
         const string module = "IOService";
         public IOService()
         {
-            logService = Program.getProvider().GetService<ILogService>();
+            logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
         }
 
         public Task ProcessKill(int id)

@@ -18,5 +18,6 @@ namespace MusicBotClient.MusicService
         Task<string> Leave(ulong voicechannel);
 
         Task<List<IAudioVoiceChannel>> getAudioVoiceChannels();
+
     }
 }

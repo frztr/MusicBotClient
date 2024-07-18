@@ -18,6 +18,7 @@ using Websocket.Client.Exceptions;
 using System.Threading.Channels;
 using Newtonsoft.Json;
 using MusicBotClient.CoordinationService;
+using CoreMusicBot;
 
 namespace MusicBotClient.MusicService
 {
@@ -27,12 +28,12 @@ namespace MusicBotClient.MusicService
         AbsAudioChannelFactory audioChannelFactory;
         ILogService logService;
         IIOService IOService;
-        ICoordinationService coordinationService;
+        //ICoordinationService coordinationService;
         const string module = "MusicService";
 
         public MusicService()
         {
-            IServiceProvider provider = Program.getProvider();
+            IServiceProvider provider = ApplicationContext.ServiceProvider;
             client = provider.GetService<DiscordShardedClient>();
             audioChannelFactory = provider.GetService<AbsAudioChannelFactory>();
             logService = provider.GetService<ILogService>();
