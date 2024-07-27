@@ -1,0 +1,2 @@
+if you have problems with yt-dlp in linux please enter "python3 -m pip install --force-reinstall https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz".
+that problem exists probably about 1 year and widely known.

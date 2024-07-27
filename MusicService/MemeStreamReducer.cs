@@ -18,7 +18,6 @@ namespace MusicBotClient.MusicService
         private IMemeService memeService;
         private ILogService logService;
         private string module = "MemeStreamReducer";
-        const int ARRAY_SIZE = 960;
         private Stream usedProcess;
 
         public MemeStreamReducer(Stream usedProcess)

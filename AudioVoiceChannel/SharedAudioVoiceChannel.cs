@@ -69,10 +69,7 @@ namespace CoreMusicBot.AudioVoiceChannel
                 _isplaying = value;
                 if (value == false)
                 {
-                    //logService.Log(LogCategories.LOG_DATA, module, "Send_async. track_ended");
-                    //coordinationService.SendAsync(
-                    //    JsonConvert.SerializeObject(new { operation = "clientEndedVideo", channelid = id }));
-                    musicService.Play(id);
+                    musicService.PlayForce(id);
                 }
             }
         }
@@ -130,8 +127,11 @@ namespace CoreMusicBot.AudioVoiceChannel
                         catch (TaskCanceledException ex)
                         {
                             logService.Log(LogCategories.LOG_DATA, module, "TaskCanceledException");
-                            await Task.Delay(300);
-                            await Run();
+                            if (IsPlaying)
+                            {
+                                await Task.Delay(300);
+                                await Run();
+                            }
                             return;
                         }
                         catch (OperationCanceledException ex)
@@ -140,15 +140,21 @@ namespace CoreMusicBot.AudioVoiceChannel
                             logService.Log(LogCategories.LOG_DATA, module, $"AudioClient connection: {client.ConnectionState}");
                             logService.Log(LogCategories.LOG_ERR, module, exception: ex);
                             logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            await Task.Delay(300);
-                            await Run();
+                            if (IsPlaying)
+                            {
+                                await Task.Delay(300);
+                                await Run();
+                            }
                             return;
                         }
                         catch (Exception ex)
                         {
                             logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                            await Task.Delay(300);
-                            await Run();
+                            if (IsPlaying)
+                            {
+                                await Task.Delay(300);
+                                await Run();
+                            }
                             return;
                         }
                         MixerStream.SetLength(0);
@@ -169,7 +175,7 @@ namespace CoreMusicBot.AudioVoiceChannel
             currentProcess = process;
         }
 
-        public void Stop()
+        public async void Stop()
         {
             logService.Log(LogCategories.LOG_DATA, module, $"Stopping audio in {id}");
             //Removed for dont duplicate sending to server.
@@ -183,7 +189,7 @@ namespace CoreMusicBot.AudioVoiceChannel
                 {
                     var reducer = (MusicStreamReducer)x;
                     //streamReducers.Remove(x);
-                    reducer.Destroy();
+                    await reducer.Destroy();
                 }
             }
 
@@ -203,12 +209,13 @@ namespace CoreMusicBot.AudioVoiceChannel
         public void reducerOnEnd(AbsStreamReducer reducer)
         {
             streamReducers.Remove(reducer);
-            logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
+            logService.Log(LogCategories.LOG_DATA, module, $"Reducer on End. reducers count:{streamReducers.Count}");
             if (reducer.GetType() == typeof(MusicStreamReducer))
             {
                 IsPlaying = false;
-            }
+                logService.Log(LogCategories.LOG_DATA, module, $"Reducer on End. IsPlaying:{IsPlaying}");
 
+            }
         }
 
         public IAudioClient getAudioClient()

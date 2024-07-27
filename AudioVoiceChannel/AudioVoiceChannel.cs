@@ -42,17 +42,7 @@ namespace MusicBotClient.AudioVoiceChannel
             try
             {
                 this.MixerStream = new MemoryStream();
-                //this.client = channel.ConnectAsync().GetAwaiter().GetResult();                
                 Run();
-                //Task.Run(async () =>
-                //{
-                //    while (true)
-                //    {
-                //        await Task.Delay(20000);
-                //        await channel.DisconnectAsync();
-                //        logService.Log(LogCategories.LOG_DATA, module, "AUDIO DISCONNECT");
-                //    }
-                //});
             }
             catch (Exception ex)
             {

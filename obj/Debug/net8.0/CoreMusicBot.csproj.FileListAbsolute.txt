@@ -1,50 +1,98 @@
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.csproj.AssemblyReference.cache
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.AssemblyInfoInputs.cache
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.AssemblyInfo.cs
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.csproj.CoreCompileInputs.cache
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\ban.m4a
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\discord-leave.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\discord-sounds.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\fart-with-reverb.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\fart.webm
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\fart_fat.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\gachi.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\modem.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\oh-shit-iam-sorry.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\rip-ears.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\spasibo-kloun.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\sounds\stick-your-finger-in-my-ass.mp3
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBot.exe
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBot.deps.json
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBot.runtimeconfig.json
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBot.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBot.pdb
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.Commands.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.Core.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.Interactions.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.Rest.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.Webhook.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Discord.Net.WebSocket.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\System.Interactive.Async.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\System.Linq.Async.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\System.Reactive.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\Websocket.Client.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBotLibrary.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\CoreMusicBotLibrary.pdb
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusi.A34F0969.Up2Date
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\refint\CoreMusicBot.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.pdb
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\CoreMusicBot.genruntimeconfig.cache
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\obj\Debug\net8.0\ref\CoreMusicBot.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\ffmpeg.exe
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\libsodium.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\opus.dll
-C:\Users\mrzak\source\repos\CoreMusicBot\CoreMusicBot\bin\Debug\net8.0\yt-dlp.exe
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.csproj.AssemblyReference.cache
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.AssemblyInfoInputs.cache
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.AssemblyInfo.cs
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.csproj.CoreCompileInputs.cache
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/ban.m4a
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/discord-leave.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/discord-sounds.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/fart-with-reverb.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/fart.webm
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/fart_fat.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/gachi.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/modem.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/oh-shit-iam-sorry.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/rip-ears.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/spasibo-kloun.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/sounds/stick-your-finger-in-my-ass.mp3
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBot.exe
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBot.deps.json
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBot.runtimeconfig.json
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBot.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBot.pdb
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.Commands.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.Core.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.Interactions.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.Rest.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.Webhook.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Discord.Net.WebSocket.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Microsoft.IO.RecyclableMemoryStream.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Newtonsoft.Json.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/System.Interactive.Async.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/System.Linq.Async.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/System.Reactive.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/Websocket.Client.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBotLibrary.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/CoreMusicBotLibrary.pdb
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusi.A34F0969.Up2Date
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/refint/CoreMusicBot.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.pdb
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/CoreMusicBot.genruntimeconfig.cache
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/obj/Debug/net8.0/ref/CoreMusicBot.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/ffmpeg.exe
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/libsodium.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/opus.dll
+C:/Users/mrzak/source/repos/CoreMusicBot/CoreMusicBot/bin/Debug/net8.0/yt-dlp.exe
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBotLibrary.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/libsodium.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/opus.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/ban.m4a
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/discord-leave.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/discord-sounds.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/fart-with-reverb.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/fart.webm
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/fart_fat.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/gachi.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/modem.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/oh-shit-iam-sorry.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/rip-ears.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/spasibo-kloun.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/sounds/stick-your-finger-in-my-ass.mp3
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBot
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBot.deps.json
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBot.runtimeconfig.json
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBot.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/CoreMusicBot.pdb
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.Commands.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.Core.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.Interactions.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.Rest.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.Webhook.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Discord.Net.WebSocket.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Microsoft.IO.RecyclableMemoryStream.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/System.Interactive.Async.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/System.Linq.Async.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/System.Reactive.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/bin/Debug/net8.0/Websocket.Client.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.csproj.AssemblyReference.cache
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.GeneratedMSBuildEditorConfig.editorconfig
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.AssemblyInfoInputs.cache
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.AssemblyInfo.cs
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.csproj.CoreCompileInputs.cache
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.sourcelink.json
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusi.A34F0969.Up2Date
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/refint/CoreMusicBot.dll
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.pdb
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/CoreMusicBot.genruntimeconfig.cache
+/home/forezzzter/Рабочий стол/MusicBotClient/obj/Debug/net8.0/ref/CoreMusicBot.dll

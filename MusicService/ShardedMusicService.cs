@@ -72,6 +72,7 @@ namespace CoreMusicBot.MusicService
             var channel = channels.FirstOrDefault(x => x.avChannel.getId() == voicechannel);
             return new Tuple<AbsVideoInfo, List<AbsVideoInfo>>(channel.CurrentVideo, channel.Queue.ToList());
         }
+        
 
         private async Task Abort(ChannelInfo channelInfo)
         {
@@ -114,6 +115,13 @@ namespace CoreMusicBot.MusicService
         {
             var channel = channels.FirstOrDefault(x => x.avChannel.getId() == voicechannel);
             channel.avChannel.addStreamReducer(reducer);
+        }
+
+        public async Task PlayForce(ulong voicechannel)
+        {
+            var channel = channels.FirstOrDefault(x => x.avChannel.getId() == voicechannel);
+            channel.CurrentVideo = null;
+            Play(voicechannel);
         }
 
         class ChannelInfo

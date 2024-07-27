@@ -12,6 +12,10 @@ namespace MusicBotClient.MusicService
     {
         //public bool IsRunning { get; protected set; } = true;
 
+        protected const int ARRAY_SIZE = 3840;
+
+        protected const int BYTES_IN_SECOND = 192000;
+
         public abstract Task Execute(Stream stream);
 
         public abstract Task Destroy();

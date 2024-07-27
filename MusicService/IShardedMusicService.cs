@@ -26,5 +26,7 @@ namespace CoreMusicBot.MusicService
 
         Task AddCustomReducer(ulong voicechannel, AbsStreamReducer reducer);
 
+
+        Task PlayForce(ulong voicechannel);
     }
 }

@@ -18,15 +18,23 @@ namespace MusicBotClient.MusicService
         private ILogService logService;
         private string path;
         private string module = "MusicStreamReducer";
-        private const int ARRAY_SIZE = 960;
         public Process usedProcess { get; protected set; }
         private IIOService iOService;
         private ulong bytecount = 0;
 
-        public MusicStreamReducer(string path)
+        private static int global_id = 0;
+
+        private int Id;
+
+        private bool Live { get; set; }
+
+        public MusicStreamReducer(string path, bool live = false)
         {
             logService = ApplicationContext.ServiceProvider.GetService<ILogService>();
             this.path = path;
+            Id = global_id;
+            global_id += 1;
+            Live = live;
             Continue();
             this.iOService = ApplicationContext.ServiceProvider.GetService<IIOService>();
         }
@@ -66,16 +74,19 @@ namespace MusicBotClient.MusicService
                 }
 
                 await stream.WriteAsync(basearray, 0, basearray.Length);
-                stream.Position -= ARRAY_SIZE;
-                bytecount += ARRAY_SIZE;
+                // if (!Live)
+                {
+                    stream.Position -= ARRAY_SIZE;
+                    bytecount += ARRAY_SIZE;
+                }
 
-                //logService.Log(LogCategories.LOG_DATA, module, $"EndOfStream:{usedProcess.StandardOutput.BaseStream}");
+                Console.WriteLine($"Bytes in msr{Id}: {bytecount}");
             });
         }
 
         private Process CreateYoutubeStream(string url)
         {
-            double ticks = (Convert.ToDouble(bytecount) / (200 * ARRAY_SIZE)) * 10000000;
+            double ticks = (Convert.ToDouble(bytecount) / BYTES_IN_SECOND) * 10000000;
             DateTime pos = new DateTime(Convert.ToInt64(ticks));
             try
             {
@@ -91,12 +102,13 @@ namespace MusicBotClient.MusicService
                         RedirectStandardError = true
                     };
                 }
-                else 
+                else
                 {
                     ffmpeg = new ProcessStartInfo
                     {
                         FileName = "/bin/bash",
-                        Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        // Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        Arguments = $"-c \"yt-dlp --extractor-args \"youtube:formats=dashy\" -N 4  -q -f bestaudio/best \"{url.Replace("youtube.com","piped.video")}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true
@@ -125,7 +137,8 @@ namespace MusicBotClient.MusicService
             {
                 if (e.Data.Contains("10054") ||
                     e.Data.Contains("403") ||
-                    e.Data.Contains("Got error: The read operation timed out. Giving up after 10 retries"))
+                    e.Data.Contains("Giving up after 10 retries") ||
+                    e.Data.Contains("ERROR:"))
                 {
                     logService.Log(LogCategories.LOG_DATA, module, $"Continue on bytes: {bytecount}");
                     Continue();
@@ -154,6 +167,7 @@ namespace MusicBotClient.MusicService
             {
                 var p = Process.GetProcessById(usedProcess.Id);
                 await iOService.ProcessKill(usedProcess.Id);
+                logService.Log(LogCategories.LOG_DATA, module, $"Destroyed process {usedProcess.Id}.");
             }
             catch (ArgumentException ex)
             {
