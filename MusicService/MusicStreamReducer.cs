@@ -80,7 +80,7 @@ namespace MusicBotClient.MusicService
                     bytecount += ARRAY_SIZE;
                 }
 
-                Console.WriteLine($"Bytes in msr{Id}: {bytecount}");
+                // Console.WriteLine($"Bytes in msr{Id}: {bytecount}");
             });
         }
 
@@ -107,8 +107,8 @@ namespace MusicBotClient.MusicService
                     ffmpeg = new ProcessStartInfo
                     {
                         FileName = "/bin/bash",
-                        // Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
-                        Arguments = $"-c \"yt-dlp --extractor-args \"youtube:formats=dashy\" -N 4  -q -f bestaudio/best \"{url.Replace("youtube.com","piped.video")}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        // Arguments = $"-c \"yt-dlp --extractor-args \"youtube:formats=dashy\" -N 4  -q -f bestaudio/best \"{url.Replace("youtube.com","piped.video")}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true
