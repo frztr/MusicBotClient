@@ -29,7 +29,8 @@ namespace MusicBotClient.IOService
         {
             switch (Environment.OSVersion.Platform)
             {
-                case PlatformID.Win32NT:
+                default:
+                // case PlatformID.Win32NT:
                     //ManagementObjectSearcher processSearcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + processId);
                     //ManagementObjectCollection processCollection = processSearcher.Get();
                     try
@@ -56,6 +57,23 @@ namespace MusicBotClient.IOService
                     //    }
                     //}
                     break;
+                // case PlatformID.Unix:
+                //     try
+                //     {
+                //         Process proc = Process.GetProcessById(processId);
+                //         if (!proc.HasExited)
+                //         {
+                //             logService.Log(LogCategories.LOG_DATA, module, $"Kill Process:{proc.ProcessName} ({proc.Id})");
+                //             proc.Kill(true);
+                //             proc.WaitForExit();
+                //             proc.Close();
+                //         }
+                //     }
+                //     catch (ArgumentException ex)
+                //     {
+                //         logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                //     }
+                //     break;
 
             }
         }

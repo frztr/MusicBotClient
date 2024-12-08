@@ -18,16 +18,33 @@ namespace CoreMusicBot.VideoService
         public async Task<List<AbsVideoInfo>> getVideoInfo(string videoId)
         {
             List<AbsVideoInfo> videoInfo = new List<AbsVideoInfo>();
-            if (videoId.Contains("list="))
+            if (videoId.Contains("https://www.youtube"))
             {
-                string playlistId = Regex.Match(videoId, @"list=[a-zA-Z0-9_\-]+").Value.Split('=').Last();
-                string actualvideoId = Regex.Match(videoId, @"v=[a-zA-Z0-9_\-]+").Value.Split('=').Last();
-                videoInfo.AddRange(await GetPlalistInfoFromYoutube(playlistId, actualvideoId));
+                if (videoId.Contains("list="))
+                {
+                    string playlistId = Regex.Match(videoId, @"list=[a-zA-Z0-9_\-]+").Value.Split('=').Last();
+                    string actualvideoId = Regex.Match(videoId, @"v=[a-zA-Z0-9_\-]+").Value.Split('=').Last();
+                    videoInfo.AddRange(await GetPlalistInfoFromYoutube(playlistId, actualvideoId));
+                }
+                else
+                {
+                    videoInfo.Add(await GetVideoInfoFromYoutube(Regex.Match(videoId, @"v=[a-zA-Z0-9_\-]+").Value.Split('=').Last()));
+                }
             }
             else
             {
-                videoInfo.Add(await GetVideoInfoFromYoutube(Regex.Match(videoId, @"v=[a-zA-Z0-9_\-]+").Value.Split('=').Last()));
+                AbsVideoInfo info = ApplicationContext.ServiceProvider.GetService<AbsVideoInfoFactory>().CreateVideoInfo();
+                info.VideoUrl = $"{videoId.Replace("vkvideo.ru","vk.com")}";
+                info.Title = $"{videoId}";
+                // info.LiveBroadcast = input_info.snippet.liveBroadcastContent.ToString();
+                if (info.LiveBroadcast == "none")
+                {
+                    info.Duration = new TimeSpan();
+                    // info.Duration = DurationStringToTimeSpan(input_info.contentDetails.duration.ToString());
+                }
+                return new List<AbsVideoInfo>(){info};
             }
+
             return videoInfo;
         }
 
@@ -48,7 +65,7 @@ namespace CoreMusicBot.VideoService
                     ids.Add(item.contentDetails.videoId.ToString());
                 }
                 var response2 = await GetResponseAsync($"https://www.googleapis.com/youtube/v3/videos?key={Token}&maxResults=50&part=snippet,contentDetails&id={String.Join(",", ids.ToArray())}");
-                
+
                 foreach (var item in response2.items)
                 {
                     infos.Add(DynamicToVideoInfo(item));

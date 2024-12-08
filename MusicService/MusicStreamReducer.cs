@@ -104,10 +104,11 @@ namespace MusicBotClient.MusicService
                 }
                 else
                 {
+                    logService.Log(LogCategories.LOG_DATA,"YTDLP",url);
                     ffmpeg = new ProcessStartInfo
                     {
-                        FileName = "/bin/bash",
-                        Arguments = $"-c \"yt-dlp -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
+                        FileName = "bash",
+                        Arguments = $"-c \"yt-dlp -x --socket-timeout 25 -R infinite -q -f bestaudio/best \"{url}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
                         // Arguments = $"-c \"yt-dlp --extractor-args \"youtube:formats=dashy\" -N 4  -q -f bestaudio/best \"{url.Replace("youtube.com","piped.video")}\" -o - | ffmpeg -ss {pos.ToString("HH:mm:ss")} -hide_banner -loglevel error -i pipe: -f s16le -ar 48000 pipe:1 && exit\"",
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
