@@ -40,7 +40,7 @@ namespace MusicBotClient
             client.Log += Client_Log;
             client.ShardDisconnected += Client_ShardDisconnected;
 
-            await client.LoginAsync(TokenType.Bot, "ODEyMzE3NjA0MjY1MDY2NTE3.Grbw9X.-AVeOgLvzZZ4MXUAfz20wHtU72su1Z7V9g8l1Y");
+            await client.LoginAsync(TokenType.Bot, "");
             await client.StartAsync();
             provider.GetService<IMemeService>();
             Console.Read();

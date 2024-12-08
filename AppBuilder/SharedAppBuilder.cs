@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MusicBotClient.AudioVoiceChannel;
 using MusicBotClient.CoordinationService;
 using MusicBotClient.IOService;
+using MusicBotClient.LogService;
 using MusicBotClient.MemeService;
 using MusicBotClient.MusicService;
 using MusicBotLibrary.LogService;
@@ -37,7 +38,8 @@ namespace CoreMusicBot.AppBuilder
                 });
             ApplicationContext.ServiceProvider = collection
                 .AddSingleton(discordclient)
-                .AddSingleton<ILogService>(new LogService("MusicBotClient"))
+                // .AddSingleton<ILogService>(new LogService("MusicBotClient"))
+                .AddSingleton<ILogService>(new LogServiceClient())
                 .AddSingleton<IShardedMusicService, ShardedMusicService>()
                 .AddSingleton<AbsAudioChannelFactory, SharedAudioVoiceChannelFactory>()
                 .AddSingleton<IIOService, IOService>()
