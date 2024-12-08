@@ -23,18 +23,33 @@ namespace CoreMusicBot.AppBuilder
 {
     internal class SharedAppBuilder : IAppBuilder
     {
+        private int? shardId;
+        private int? totalShardCount;
+
+        public SharedAppBuilder(int? ShardId = null, int? TotalShardCount = null)
+        {
+            if (ShardId.HasValue && TotalShardCount.HasValue)
+            {
+                shardId = ShardId.Value;
+                totalShardCount = TotalShardCount.Value;
+            }
+        }
+
         public void InitApp(IServiceCollection collection)
         {
-            Console.WriteLine("Enter ShardId");
-            var shardId = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter TotalShardCount");
-            var totalShards = Convert.ToInt32(Console.ReadLine());
+            if (!shardId.HasValue && !totalShardCount.HasValue)
+            {
+                Console.WriteLine("Enter ShardId");
+                shardId = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter TotalShardCount");
+                totalShardCount = Convert.ToInt32(Console.ReadLine());
+            }
 
-            var discordclient = new DiscordShardedClient(new int[] { shardId },
+            var discordclient = new DiscordShardedClient(new int[] { shardId.Value },
                 new DiscordSocketConfig()
                 {
                     GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent,
-                    TotalShards = totalShards
+                    TotalShards = totalShardCount
                 });
             ApplicationContext.ServiceProvider = collection
                 .AddSingleton(discordclient)
@@ -45,7 +60,7 @@ namespace CoreMusicBot.AppBuilder
                 .AddSingleton<IIOService, IOService>()
                 .AddSingleton<IMemeService, MemeService>()
                 .AddSingleton<IVideoService, YoutubeVideoService>()
-                .AddSingleton<AbsVideoInfoFactory,VideoInfoFactory>()
+                .AddSingleton<AbsVideoInfoFactory, VideoInfoFactory>()
                 .AddSingleton<CommandService>()
                 .BuildServiceProvider();
 

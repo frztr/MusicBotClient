@@ -26,27 +26,54 @@ namespace MusicBotClient
 {
     class Program
     {
-        static IAppBuilder builder = new SharedAppBuilder();
-        static void Main(string[] args) => RunAsync().GetAwaiter().GetResult();
+        static IAppBuilder builder;
 
-        private static async Task RunAsync()
+        static AutoResetEvent autoEvent = new AutoResetEvent(false);
+        static void Main(string[] args)
+        {
+            int? shardId = null;
+            int? total = null;
+            if (args.Length > 0)
+            {
+                if (args[0] != "" && args[1] != "")
+                {
+                    try
+                    {
+                        shardId = int.Parse(args[0]);
+                        total = int.Parse(args[1]);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"Exception:{ex.Message}");
+                        Console.WriteLine("Wrong params format");
+                    }
+                }
+            }
+            RunAsync(shardId, total).GetAwaiter().GetResult();
+        }
+
+        private static async Task RunAsync(int? ShardId = null, int? TotalShardCount = null)
         {
             //ApplCntxt.ServiceProvider = new ServiceCollection().BuildServiceProvider();
+
+            builder = new SharedAppBuilder(ShardId, TotalShardCount);
             builder.InitApp(new ServiceCollection());
-            
+
             var provider = ApplicationContext.ServiceProvider;
             var client = provider.GetService<DiscordShardedClient>();
-            
+
             client.Log += Client_Log;
             client.ShardDisconnected += Client_ShardDisconnected;
 
             await client.LoginAsync(TokenType.Bot, "");
             await client.StartAsync();
             provider.GetService<IMemeService>();
-            Console.Read();
+
+            autoEvent.WaitOne();
+            // Thread.Sleep(0);
         }
 
-        
+
 
         private async static Task Client_ShardDisconnected(Exception arg1, DiscordSocketClient arg2)
         {
@@ -55,7 +82,7 @@ namespace MusicBotClient
             provider.GetService<ILogService>().Log(LogCategories.LOG_ERR, "DiscordShardedClient", exception: arg1);
         }
 
-        
+
 
         //private static async Task Client_Disconnected(Exception arg)
         //{
