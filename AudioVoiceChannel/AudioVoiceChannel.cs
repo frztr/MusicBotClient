@@ -200,7 +200,7 @@ namespace MusicBotClient.AudioVoiceChannel
             logService.Log(LogCategories.LOG_DATA, module, $"Audio Stopped in {id}");
         }
 
-        public void addStreamReducer(AbsStreamReducer reducer)
+        public async Task addStreamReducer(AbsStreamReducer reducer)
         {
             if (reducer.GetType() == typeof(MusicStreamReducer))
             {

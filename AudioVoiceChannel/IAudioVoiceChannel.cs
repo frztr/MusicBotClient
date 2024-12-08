@@ -17,6 +17,6 @@ namespace MusicBotClient.AudioVoiceChannel
         IAudioClient getAudioClient();
 
         void Stop();
-        void addStreamReducer(AbsStreamReducer reducer);
+        Task addStreamReducer(AbsStreamReducer reducer);
     }
 }

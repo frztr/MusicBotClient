@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "System.Management": {
               "target": "Package",
               "version": "[8.0.0, )"

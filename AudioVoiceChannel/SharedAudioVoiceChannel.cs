@@ -31,6 +31,8 @@ namespace CoreMusicBot.AudioVoiceChannel
         IShardedMusicService musicService;
         const string module = "SharedAudioVoiceChannel";
 
+        bool Broadcasting = false;
+
         public SharedAudioVoiceChannel(ulong id, IAudioChannel channel)
         {
             this.id = id;
@@ -54,7 +56,7 @@ namespace CoreMusicBot.AudioVoiceChannel
         {
             this.client = await channel.ConnectAsync();
             this.outStream = this.client.CreatePCMStream(AudioApplication.Mixed);
-            Task.Run(() => Loop());
+            // Task.Run(() => Loop());
         }
 
         bool _isplaying = false;
@@ -78,90 +80,95 @@ namespace CoreMusicBot.AudioVoiceChannel
         {
             logService.Log(LogCategories.LOG_DATA, module, $"Loop for audioclient {id} started");
 
-            while (true)
-            {
-                if (streamReducers.Count > 0)
-                {
-                    while (streamReducers.Count > 0)
-                    {
-                        for (int i = 0; i < streamReducers.Count; i++)
-                        {
-                            var reducer = streamReducers[i];
-                            try
-                            {
-                                if (reducer != null)
-                                {
-                                    await reducer.Execute(MixerStream);
-                                }
-                            }
-                            catch (WebSocketClosedException ex)
-                            {
-                                logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                                logService.Log(LogCategories.LOG_DATA, module, $"WEBSOCKET CLOSED REASON: ${ex.CloseCode} {ex.Reason}");
-                                streamReducers.Remove(reducer);
-                                //await reducer.Destroy();
-                                i--;
-                                logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            }
-                            catch (ArgumentException ex)
-                            {
-                                logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                                streamReducers.Remove(reducer);
-                                //await reducer.Destroy();
-                                i--;
-                                logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            }
-                            catch (Exception ex)
-                            {
-                                logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                                streamReducers.Remove(reducer);
-                                //await reducer.Destroy();
-                                i--;
-                                logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            }
-                        }
-                        try
-                        {
-                            await MixerStream.CopyToAsync(outStream);
-                        }
-                        catch (TaskCanceledException ex)
-                        {
-                            logService.Log(LogCategories.LOG_DATA, module, "TaskCanceledException");
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
-                            return;
-                        }
-                        catch (OperationCanceledException ex)
-                        {
-                            logService.Log(LogCategories.LOG_DATA, module, "OPERATIONCANCELEDEXCEPTION");
-                            logService.Log(LogCategories.LOG_DATA, module, $"AudioClient connection: {client.ConnectionState}");
-                            logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                            logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
-                            return;
-                        }
-                        catch (Exception ex)
-                        {
-                            logService.Log(LogCategories.LOG_ERR, module, exception: ex);
-                            if (IsPlaying)
-                            {
-                                await Task.Delay(300);
-                                await Run();
-                            }
-                            return;
-                        }
-                        MixerStream.SetLength(0);
-                    }
 
+            // while (true)
+            // {
+            // if (streamReducers.Count > 0)
+            // {
+            Broadcasting = true;
+            while (streamReducers.Count > 0)
+            {
+                if (MixerStream == null && outStream == null)
+                    continue;
+
+                for (int i = 0; i < streamReducers.Count; i++)
+                {
+                    var reducer = streamReducers[i];
+                    try
+                    {
+                        if (reducer != null)
+                        {
+                            await reducer.Execute(MixerStream);
+                        }
+                    }
+                    catch (WebSocketClosedException ex)
+                    {
+                        logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                        logService.Log(LogCategories.LOG_DATA, module, $"WEBSOCKET CLOSED REASON: ${ex.CloseCode} {ex.Reason}");
+                        streamReducers.Remove(reducer);
+                        //await reducer.Destroy();
+                        i--;
+                        logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                        streamReducers.Remove(reducer);
+                        //await reducer.Destroy();
+                        i--;
+                        logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
+                    }
+                    catch (Exception ex)
+                    {
+                        logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                        streamReducers.Remove(reducer);
+                        //await reducer.Destroy();
+                        i--;
+                        logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
+                    }
                 }
+                try
+                {
+                    await MixerStream.CopyToAsync(outStream);
+                }
+                catch (TaskCanceledException ex)
+                {
+                    logService.Log(LogCategories.LOG_DATA, module, "TaskCanceledException");
+                    if (IsPlaying)
+                    {
+                        await Task.Delay(300);
+                        await Run();
+                    }
+                    return;
+                }
+                catch (OperationCanceledException ex)
+                {
+                    logService.Log(LogCategories.LOG_DATA, module, "OPERATIONCANCELEDEXCEPTION");
+                    logService.Log(LogCategories.LOG_DATA, module, $"AudioClient connection: {client.ConnectionState}");
+                    logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                    logService.Log(LogCategories.LOG_DATA, module, $"reducers count:{streamReducers.Count}");
+                    if (IsPlaying)
+                    {
+                        await Task.Delay(300);
+                        await Run();
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    logService.Log(LogCategories.LOG_ERR, module, exception: ex);
+                    if (IsPlaying)
+                    {
+                        await Task.Delay(300);
+                        await Run();
+                    }
+                    return;
+                }
+                MixerStream.SetLength(0);
             }
+            Broadcasting = false;
+            // }
+            // }
 
         }
 
@@ -196,7 +203,7 @@ namespace CoreMusicBot.AudioVoiceChannel
             logService.Log(LogCategories.LOG_DATA, module, $"Audio Stopped in {id}");
         }
 
-        public void addStreamReducer(AbsStreamReducer reducer)
+        public async Task addStreamReducer(AbsStreamReducer reducer)
         {
             if (reducer.GetType() == typeof(MusicStreamReducer))
             {
@@ -204,6 +211,10 @@ namespace CoreMusicBot.AudioVoiceChannel
             }
             reducer.OnEnd += reducerOnEnd;
             streamReducers.Add(reducer);
+            if (!Broadcasting)
+            {
+                Task.Run(() => Loop());
+            }
         }
 
         public void reducerOnEnd(AbsStreamReducer reducer)

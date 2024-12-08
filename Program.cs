@@ -22,6 +22,9 @@ using CoreMusicBot.AppBuilder;
 using CoreMusicBot;
 using static CoreMusicBot.AppBuilder.DividedAppBuilder;
 using static CoreMusicBot.AppBuilder.SharedAppBuilder;
+using System.Configuration;
+
+
 namespace MusicBotClient
 {
     class Program
@@ -49,6 +52,7 @@ namespace MusicBotClient
                     }
                 }
             }
+
             RunAsync(shardId, total).GetAwaiter().GetResult();
         }
 
@@ -65,7 +69,10 @@ namespace MusicBotClient
             client.Log += Client_Log;
             client.ShardDisconnected += Client_ShardDisconnected;
 
-            await client.LoginAsync(TokenType.Bot, "");
+            
+
+            // Console.WriteLine($"Bot_token:{ConfigurationManager.AppSettings["Bot_Token"]}");
+            await client.LoginAsync(TokenType.Bot, ConfigurationManager.AppSettings["Bot_Token"]);
             await client.StartAsync();
             provider.GetService<IMemeService>();
 

@@ -53,6 +53,7 @@ namespace CoreMusicBot.AppBuilder
                 });
             ApplicationContext.ServiceProvider = collection
                 .AddSingleton(discordclient)
+                
                 // .AddSingleton<ILogService>(new LogService("MusicBotClient"))
                 .AddSingleton<ILogService>(new LogServiceClient())
                 .AddSingleton<IShardedMusicService, ShardedMusicService>()
